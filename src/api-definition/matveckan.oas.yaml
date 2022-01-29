@@ -1,0 +1,156 @@
+openapi: '3.0.3'
+
+info: 
+  title: OpenAPI Specification for Matveckan
+  description: API specification document for the Matveckan system
+  version: '1.0.0'
+  contact:
+    name: Patric Bergkvist
+    email: dev@matveckan.se
+    url: http://www.patricbergkvist.com
+
+servers: 
+  - url: http://localhost:44333/api/v1
+    description: Production server
+
+externalDocs:
+  description: More information about Matveckan API
+  url: http://www.test.nu
+
+tags:
+  - name: users
+    description: Operations for users
+  - name: recipes
+    description: Operations for recipes
+
+paths:
+  /users:
+    summary: Operations for users
+    description: Contains all operations for users
+    get:
+      tags: 
+        - users
+      summary: Get all users
+      description: Returns a list of all users
+      operationId: getUsers
+      responses:
+        '200':
+          description: Successfully returned all users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        '400':
+          description: Bad Request
+          $ref: "#/components/responses/4xxResponse"
+        '500':
+          description: Internal server error
+          $ref: "#/components/responses/5xxResponse"
+    post:
+      tags:
+        - users
+      summary: Add new user
+      description: Adds a new user to the system
+      operationId: addUser
+      requestBody:
+        description: Adds a new user to the system
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        '200':
+          description: Successfully added user to the system
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        '400':
+          description: Bad request
+          $ref: "#/components/responses/4xxResponse"
+        '500':
+          description: Internal server error
+          $ref: "#/components/responses/5xxResponse"
+
+  /recipes:
+    summary: Operations for recipes
+    description: Contains all operations of recipes
+    get:
+      tags:
+        - recipes
+      summary: Gets all recipes
+      description: Returns a list of all recipes
+      operationId: getRecipes
+      responses:
+        '200':
+          description: Successfully returned all recipes
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+
+components:
+  schemas:
+    User:
+      type: object
+      description: Represents a user entry
+      properties:
+        firstName:
+          type: string
+          description: The users first name
+        lastName:
+          type: string
+          description: The users last name
+        nickname:
+          type: string
+          description: The users nickname
+        password:
+          type: string
+          description: The users password
+        phoneNumber:
+          type: string
+          description: The users phone number
+        email:
+          type: string
+          format: email
+          description: The users email
+      required:
+        - nickname
+        - phoneNumber
+        - password
+        - email
+    Recipe:
+      type: object
+      description: Represents a recipe entry
+      properties:
+        id:
+          type: integer
+          description: Unique id for the recipe
+        name:
+          type: string
+          description: The name of the recipe
+        preparationTime: 
+          type: integer
+          description: The preparation time in minutes
+        cookingTime:
+          type: integer
+          description: The cooking time in minutes
+        category:
+          type: string
+          enum:
+            - Pasta
+            - Meat
+            - Potato
+          description: The recipes category
+        portions:
+          type: integer
+          description: The amount of portions for the recipe
+        ingredients:
+          type: string 
+          description: FIXME!
+  responses:
+    4xxResponse:
+      description: Bad Request
+    5xxResponse:
+      description: Internal server error
