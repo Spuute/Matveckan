@@ -89,6 +89,12 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Recipe"
+        '4XX':
+          description: Bad request
+          $ref: "#/components/responses/4xxResponse"
+        '5XX':
+          description: Internal server error
+          $ref: "#/components/responses/5xxResponse"
 
 components:
   schemas:
@@ -129,26 +135,68 @@ components:
           description: Unique id for the recipe
         name:
           type: string
-          description: The name of the recipe
+          description: Name of the recipe
         preparationTime: 
           type: integer
-          description: The preparation time in minutes
+          description: Preparation time in minutes
         cookingTime:
           type: integer
-          description: The cooking time in minutes
+          description: Cooking time in minutes
         category:
           type: string
           enum:
             - Pasta
             - Meat
             - Potato
-          description: The recipes category
+          description: Recipe category
         portions:
           type: integer
-          description: The amount of portions for the recipe
+          description: Amount of portions for the recipe
         ingredients:
-          type: string 
-          description: FIXME!
+          description: Ingredients for the recipe
+          type: array
+          items:
+              $ref: "#/components/schemas/ingredient"
+        instructions:
+          description: Instructions for the recipe
+          type: array
+          items:
+            $ref: "#/components/schemas/instruction"
+      required:
+        - name
+        - preparationTime
+        - cookingTime
+        - category
+        - portions
+        - ingredients
+        - instructions
+    ingredient:
+      type: object
+      description: Represents a ingredient entry
+      properties:
+        unitOfMeasurement:
+          description: Represents the unit of measurement for the ingredient
+          type: string
+          enum:
+            - grams
+            - milliliters
+        unit:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 20000
+        name:
+          type: string
+    instruction:
+      description: Represents a instruction entry
+      type: object
+      properties:
+        stepName:
+          description: Represents a step in the instruction
+          type: string
+      required:
+        - stepName
+
   responses:
     4xxResponse:
       description: Bad Request
