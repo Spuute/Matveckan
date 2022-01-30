@@ -95,6 +95,22 @@ paths:
         '5XX':
           description: Internal server error
           $ref: "#/components/responses/5xxResponse"
+    post:
+      tags:
+        - recipes
+      summary: Adds a recipe
+      description: Adds a new recipe to the system
+      operationId: addRecipe
+      requestBody:
+        $ref: "#/components/requestBodies/recipeBody"
+      responses:
+        '201':
+          description: Successfully added the recipe to the system
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+
   /recipes/{recipeId}:
     summary: Operations for specific recipe
     description: Contains all operations for specific recipes
@@ -128,12 +144,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/recipeIdPath"
       requestBody:
-        description: The updated recipe
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/Recipe"
+        $ref: "#/components/requestBodies/recipeBody"
       responses:
         '200':
           description: Successfully updated recipe
@@ -271,7 +282,14 @@ components:
       required: true
       schema:
         type: string
-
+  requestBodies:
+    recipeBody:
+      description: The updated recipe
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Recipe"
   responses:
     4xxResponse:
       description: Bad Request
