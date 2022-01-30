@@ -137,7 +137,25 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Recipe"
-
+    delete:
+      tags:
+        - recipes
+      summary: Delete a specific recipe
+      description: Removes a recipe entry from the system
+      operationId: deleteRecipe
+      responses:
+        '200':
+          description: Successfully deleted recipe
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+        '4XX':
+          description: Bad request
+          $ref: "#/components/responses/4xxResponse"
+        '5XX':
+          description: Internal server error
+          $ref: "#/components/responses/5xxResponse" 
 
 components:
   schemas:
