@@ -257,6 +257,14 @@ components:
           type: string
       required:
         - stepName
+  parameters:
+    recipeIdPath:
+      name: recipeId
+      in: path
+      description: The unique recipe id
+      required: true
+      schema:
+        type: string
 
   responses:
     4xxResponse:
