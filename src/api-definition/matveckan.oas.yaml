@@ -104,6 +104,8 @@ paths:
       summary: Gets a specific recipe based on recipeId
       description: Returns the specific recipe
       operationId: getRecipe
+      parameters:
+        - $ref: "#/components/parameters/recipeIdPath"
       responses:
         '200':
           description: Successfully returned recipe
@@ -123,6 +125,8 @@ paths:
       summary: Updates a specific recipe
       description: Returns the updated recipe
       operationId: updateRecipe
+      parameters:
+        - $ref: "#/components/parameters/recipeIdPath"
       requestBody:
         description: The updated recipe
         required: true
@@ -143,6 +147,8 @@ paths:
       summary: Delete a specific recipe
       description: Removes a recipe entry from the system
       operationId: deleteRecipe
+      parameters:
+        - $ref: "#/components/parameters/recipeIdPath"
       responses:
         '200':
           description: Successfully deleted recipe
