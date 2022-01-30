@@ -117,6 +117,27 @@ paths:
         '5XX':
           description: Internal server error
           $ref: "#/components/responses/5xxResponse"
+    put:
+      tags:
+        - recipes
+      summary: Updates a specific recipe
+      description: Returns the updated recipe
+      operationId: updateRecipe
+      requestBody:
+        description: The updated recipe
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Recipe"
+      responses:
+        '200':
+          description: Successfully updated recipe
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+
 
 components:
   schemas:
