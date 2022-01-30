@@ -95,6 +95,28 @@ paths:
         '5XX':
           description: Internal server error
           $ref: "#/components/responses/5xxResponse"
+  /recipes/{recipeId}:
+    summary: Operations for specific recipe
+    description: Contains all operations for specific recipes
+    get:
+      tags:
+        - recipes
+      summary: Gets a specific recipe based on recipeId
+      description: Returns the specific recipe
+      operationId: getRecipe
+      responses:
+        '200':
+          description: Successfully returned recipe
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Recipe"
+        '4XX':
+          description: Bad request
+          $ref: "#/components/responses/4xxResponse"
+        '5XX':
+          description: Internal server error
+          $ref: "#/components/responses/5xxResponse"
 
 components:
   schemas:
