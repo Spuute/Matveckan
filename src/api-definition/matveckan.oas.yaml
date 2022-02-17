@@ -19,9 +19,13 @@ externalDocs:
 
 tags:
   - name: users
-    description: Operations for users
+    description: All operations for users
   - name: recipes
-    description: Operations for recipes
+    description: All operations for recipes
+  - name: categories
+    description: All operations for categories
+  - name: ingredients
+    description: All operations for ingredients
 
 paths:
   /users:
@@ -72,7 +76,6 @@ paths:
         '500':
           description: Internal server error
           $ref: "#/components/responses/5xxResponse"
-
   /recipes:
     summary: Operations for recipes
     description: Contains all operations of recipes
@@ -110,37 +113,36 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Recipe"
-
   /recipes/{recipeId}:
     summary: Operations for specific recipe
     description: Contains all operations for specific recipes
     get:
-      tags:
-        - recipes
+      operationId: getRecipe
       summary: Gets a specific recipe based on recipeId
       description: Returns the specific recipe
-      operationId: getRecipe
+      tags:
+        - recipes
       parameters:
-        - $ref: "#/components/parameters/recipeIdPath"
+        - $ref: '#/components/parameters/recipeIdPath'
       responses:
         '200':
           description: Successfully returned recipe
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Recipe"
+                $ref: '#/components/schemas/Recipe'
         '4XX':
           description: Bad request
-          $ref: "#/components/responses/4xxResponse"
+          $ref: '#/components/responses/4xxResponse'
         '5XX':
           description: Internal server error
-          $ref: "#/components/responses/5xxResponse"
+          $ref: '#/components/responses/5xxResponse'
     put:
-      tags:
-        - recipes
+      operationId: updateRecipe
       summary: Updates a specific recipe
       description: Returns the updated recipe
-      operationId: updateRecipe
+      tags:
+        - recipes
       parameters:
         - $ref: "#/components/parameters/recipeIdPath"
       requestBody:
@@ -153,11 +155,11 @@ paths:
               schema:
                 $ref: "#/components/schemas/Recipe"
     delete:
-      tags:
-        - recipes
+      operationId: deleteRecipe
       summary: Delete a specific recipe
       description: Removes a recipe entry from the system
-      operationId: deleteRecipe
+      tags:
+        - recipes
       parameters:
         - $ref: "#/components/parameters/recipeIdPath"
       responses:
@@ -173,13 +175,37 @@ paths:
         '5XX':
           description: Internal server error
           $ref: "#/components/responses/5xxResponse" 
-
-  /recipes/category/{categoryName}:
+  /recipes/{recipeId}/ingredients:
+    summary: Operations for ingredients to a specific recipe
+    description: Contains all operations for ingredients to a specific recipe
+    get:
+      operationId: getIngredients
+      summary: Gets all ingredients for a specific recipe
+      description: Returns a list of ingredients for a specific recipe
+      tags:
+        - recipes
+        - ingredients
+      parameters:
+        - $ref: '#/components/parameters/recipeIdPath'
+      responses:
+        '200':
+          description: Successfully recived ingredients from db
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ingredient'
+        '4XX':
+          $ref: '#/components/responses/4xxResponse'
+        '5XX':
+          $ref: '#/components/responses/5xxResponse'
+  /categories/{categoryName}:
     summary: Operations for recipes with a specific category
     description: Contains all operations for a specific recipe category
     get:
       tags:
-        - recipes
+        - categories
       summary: Gets all recipes with a specific category name
       description: Returns a list with all recipes from the specific categoryName
       operationId: getRecipesByCategory
