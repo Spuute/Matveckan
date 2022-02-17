@@ -200,6 +200,58 @@ paths:
           $ref: '#/components/responses/4xxResponse'
         '5XX':
           $ref: '#/components/responses/5xxResponse'
+    post:
+      operationId: addIngredient
+      summary: Add new ingredient to recipe
+      description: Adds a new ingredient entry to the database and returnes the ingredient
+      tags:
+        - recipes
+        - ingredients
+      parameters:
+        - $ref: '#/components/parameters/recipeIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ingredient'
+      responses:
+        '201':
+          description: Successfully added ingredient entry to database
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ingredient'
+        '4XX':
+          $ref: '#/components/responses/4xxResponse'
+        '5XX':
+          $ref: '#/components/responses/5xxResponse'
+    put:
+      operationId: updateIngredient
+      summary: Updates an ingredient
+      description: Updates an ingredient entry in the database and retunes the updated ingredient
+      tags:
+        - recipes
+        - ingredients
+      parameters:
+        - $ref: '#/components/parameters/recipeIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ingredient'
+      responses:
+        '200':
+          description: Successfully updated the ingredient
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ingredient'
+        '4XX':
+          $ref: '#/components/responses/4xxResponse'
+        '5XX':
+          $ref: '#/components/responses/5xxResponse'
   /categories/{categoryName}:
     summary: Operations for recipes with a specific category
     description: Contains all operations for a specific recipe category
@@ -210,20 +262,22 @@ paths:
       description: Returns a list with all recipes from the specific categoryName
       operationId: getRecipesByCategory
       parameters:
-        - $ref: "#/components/parameters/categoryNameInPath"
+        - $ref: '#/components/parameters/categoryNameInPath'
       responses:
         '200':
           description: Gets all recipes in specific category
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Recipe"
+                type: array
+                items:
+                  $ref: '#/components/schemas/Recipe'
         '4XX':
           description: Bad request
-          $ref: "#/components/responses/4xxResponse"
+          $ref: '#/components/responses/4xxResponse'
         '5XX':
           description: Internal server error
-          $ref: "#/components/responses/5xxResponse"
+          $ref: '#/components/responses/5xxResponse'
 components:
   schemas:
     User:
