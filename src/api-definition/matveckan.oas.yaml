@@ -362,8 +362,7 @@ components:
           description: Represents the unit of measurement for the ingredient
           type: string
           enum:
-            - grams
-            - milliliters
+            - $ref: '#/components/schemas/unitOfMeasurement'
         unit:
           type: number
           format: double
@@ -380,6 +379,19 @@ components:
           type: string
       required:
         - stepName
+    Rating:
+      type: integer
+      enum:
+        - 1
+        - 2
+        - 3
+        - 4
+        - 5
+    unitOfMeasurement:
+      type: string
+      enum:
+        - grams
+        - milliliters
   parameters:
     recipeIdPath:
       name: recipeId
