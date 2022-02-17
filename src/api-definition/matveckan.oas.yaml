@@ -332,6 +332,10 @@ components:
             - Pasta
             - Meat
             - Potato
+        rating:
+          type: integer
+          enum:
+            - $ref: '#/components/schemas/rating'
           description: Recipe category
         portions:
           type: integer
@@ -379,7 +383,7 @@ components:
           type: string
       required:
         - stepName
-    Rating:
+    rating:
       type: integer
       enum:
         - 1
