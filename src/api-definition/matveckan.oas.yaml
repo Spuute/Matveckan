@@ -43,13 +43,15 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
         '400':
           description: Bad Request
-          $ref: "#/components/responses/4xxResponse"
+          $ref: '#/components/responses/4xxResponse'
         '500':
           description: Internal server error
-          $ref: "#/components/responses/5xxResponse"
+          $ref: '#/components/responses/5xxResponse'
     post:
       tags:
         - users
@@ -62,20 +64,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/User"
+              $ref: '#/components/schemas/User'
       responses:
         '200':
           description: Successfully added user to the system
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/User"
+                $ref: '#/components/schemas/User'
         '400':
           description: Bad request
-          $ref: "#/components/responses/4xxResponse"
+          $ref: '#/components/responses/4xxResponse'
         '500':
           description: Internal server error
-          $ref: "#/components/responses/5xxResponse"
+          $ref: '#/components/responses/5xxResponse'
   /recipes:
     summary: Operations for recipes
     description: Contains all operations of recipes
