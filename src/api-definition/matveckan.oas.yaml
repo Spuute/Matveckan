@@ -91,13 +91,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Recipe"
+                $ref: '#/components/schemas/Recipe'
         '4XX':
           description: Bad request
-          $ref: "#/components/responses/4xxResponse"
+          $ref: '#/components/responses/4xxResponse'
         '5XX':
           description: Internal server error
-          $ref: "#/components/responses/5xxResponse"
+          $ref: '#/components/responses/5xxResponse'
     post:
       tags:
         - recipes
@@ -105,14 +105,14 @@ paths:
       description: Adds a new recipe to the system
       operationId: addRecipe
       requestBody:
-        $ref: "#/components/requestBodies/recipeBody"
+        $ref: '#/components/requestBodies/recipeBody'
       responses:
         '201':
           description: Successfully added the recipe to the system
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Recipe"
+                $ref: '#/components/schemas/Recipe'
   /recipes/{recipeId}:
     summary: Operations for specific recipe
     description: Contains all operations for specific recipes
