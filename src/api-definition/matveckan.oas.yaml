@@ -93,7 +93,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Recipe'
+                $ref: '#/components/schemas/recipe'
         '4XX':
           description: Bad request
           $ref: '#/components/responses/4xxResponse'
@@ -114,7 +114,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Recipe'
+                $ref: '#/components/schemas/recipe'
   /recipes/{recipeId}:
     summary: Operations for specific recipe
     description: Contains all operations for specific recipes
@@ -132,7 +132,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Recipe'
+                $ref: '#/components/schemas/recipe'
         '4XX':
           description: Bad request
           $ref: '#/components/responses/4xxResponse'
@@ -155,7 +155,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Recipe"
+                $ref: "#/components/schemas/recipe"
     delete:
       operationId: deleteRecipe
       summary: Delete a specific recipe
@@ -170,7 +170,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Recipe"
+                $ref: "#/components/schemas/recipe"
         '4XX':
           description: Bad request
           $ref: "#/components/responses/4xxResponse"
@@ -273,7 +273,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Recipe'
+                  $ref: '#/components/schemas/recipe'
         '4XX':
           description: Bad request
           $ref: '#/components/responses/4xxResponse'
@@ -310,7 +310,7 @@ components:
         - phoneNumber
         - password
         - email
-    Recipe:
+    recipe:
       type: object
       description: Represents a recipe entry
       properties:
@@ -418,7 +418,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: "#/components/schemas/Recipe"
+            $ref: "#/components/schemas/recipe"
   responses:
     4xxResponse:
       description: Bad Request
