@@ -336,7 +336,7 @@ components:
           type: integer
           enum:
             - $ref: '#/components/schemas/rating'
-          description: Recipe category
+          description: Rating for the recipe.
         portions:
           type: integer
           description: Amount of portions for the recipe
