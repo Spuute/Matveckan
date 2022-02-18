@@ -374,6 +374,26 @@ components:
           maximum: 20000
         name:
           type: string
+    addIngredient:
+      type: object
+      description: DTO used to update a ingredient entry in the database
+      properties:
+        unitOfMeasurement:
+          description: Represents the unit of measurement for the ingredient
+          type: string
+          enum:
+            - $ref: '#/components/schemas/unitOfMeasurement'
+        unit:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 20000
+        name:
+          type: string
+      required:
+        - unitOfMeasurement
+        - unit
+        - name
     instruction:
       description: Represents a instruction entry
       type: object
