@@ -18,16 +18,23 @@ Tanken är att jobba med en <a href="https://swagger.io/resources/articles/adopt
 
 ## Projektet
 
-Matveckan innehåller två projekt som ligger samlade i detta repository:
+Matveckan innehåller tre projekt som ligger samlade i detta repository:
 
-* <a href="https://github.com/Spuute/Matveckan/tree/main/src/api">api</a>
-    * ASP.NET Core Web Api
-* client
-    * Blazor WebAssembly (wasm)
-* <a href="https://github.com/Spuute/Matveckan/tree/main/src/api-definition">api-definition</a>
+* <a href="https://github.com/Spuute/Matveckan/tree/main/src/api">API</a> - **ASP.NET Core Web Api**
+    * ```docker build -t matveckan-api .```
+    * ```docker run -p 4000:80 matveckan-api ``` eller ```docker run -d -p 4000:80 matveckan-api ```
+* CLIENT - **Blazor WebAssembly (WASM)**
+    * ```docker build -t matveckan-client .```
+    * ```docker run -p 5000:80 matveckan-client``` eller ```docker run -d -p 5000:80 matveckan-client```
+* <a href="https://github.com/Spuute/Matveckan/tree/main/src/api-definition">API-DEFINITION</a> -- **OpenAPI**
     * OpenAPI
 
-## Hur man kör projektet
+## Lokal utveckling
+
+För att starta upp hela systemet så finns det en docker-compose fil som ligger i ./src. Använd cli med följande kommandon:
+
+* ```docker compose build``` - (första gången)
+* ``` docker compose up ``` eller ```docker compose up -d```  (kör containern i bakgrunden)
 
 ### Kör lint lokalt
 
