@@ -7,7 +7,7 @@ jobs:
     name: Build application-solution
     runs-on: ubuntu-latest
     env:
-      working-directory: ./
+      working-directory: ./src
 
     steps:
       - uses: actions/checkout@v2
