@@ -2,8 +2,10 @@ name: Run Spectral Lint on push
 
 on:
   push:
-    paths:
-      - 'src/api-definition/**'
+    branches:
+      - '!main'
+    # paths:
+    #   - 'src/api-definition/**'
 
 jobs:
   build:
