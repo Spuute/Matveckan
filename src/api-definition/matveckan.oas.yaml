@@ -441,6 +441,6 @@ components:
             $ref: "#/components/schemas/recipe"
   responses:
     4xxResponse:
-      description: Bad Request 
+      description: Bad Request
     5xxResponse:
       description: Internal server error
