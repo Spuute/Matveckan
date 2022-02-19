@@ -47,10 +47,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/User'
         '400':
-          description: Bad Request
           $ref: '#/components/responses/4xxResponse'
         '500':
-          description: Internal server error
           $ref: '#/components/responses/5xxResponse'
     post:
       tags:
@@ -73,10 +71,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/User'
         '400':
-          description: Bad request
           $ref: '#/components/responses/4xxResponse'
         '500':
-          description: Internal server error
           $ref: '#/components/responses/5xxResponse'
   /recipes:
     summary: Operations for recipes
@@ -95,10 +91,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/recipe'
         '4XX':
-          description: Bad request
           $ref: '#/components/responses/4xxResponse'
         '5XX':
-          description: Internal server error
           $ref: '#/components/responses/5xxResponse'
     post:
       tags:
@@ -134,10 +128,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/recipe'
         '4XX':
-          description: Bad request
           $ref: '#/components/responses/4xxResponse'
         '5XX':
-          description: Internal server error
           $ref: '#/components/responses/5xxResponse'
     put:
       operationId: updateRecipe
@@ -172,10 +164,8 @@ paths:
               schema:
                 $ref: "#/components/schemas/recipe"
         '4XX':
-          description: Bad request
           $ref: "#/components/responses/4xxResponse"
         '5XX':
-          description: Internal server error
           $ref: "#/components/responses/5xxResponse" 
   /recipes/{recipeId}/ingredients:
     summary: Operations for ingredients to a specific recipe
@@ -275,10 +265,8 @@ paths:
                 items:
                   $ref: '#/components/schemas/recipe'
         '4XX':
-          description: Bad request
           $ref: '#/components/responses/4xxResponse'
         '5XX':
-          description: Internal server error
           $ref: '#/components/responses/5xxResponse'
 components:
   schemas:
@@ -335,7 +323,11 @@ components:
         rating:
           type: integer
           enum:
-            - $ref: '#/components/schemas/rating'
+            - 1
+            - 2
+            - 3
+            - 4
+            - 5
           description: Rating for the recipe.
         portions:
           type: integer
@@ -366,7 +358,8 @@ components:
           description: Represents the unit of measurement for the ingredient
           type: string
           enum:
-            - $ref: '#/components/schemas/unitOfMeasurement'
+            - grams
+            - milliliters
         unit:
           type: number
           format: double
@@ -382,7 +375,8 @@ components:
           description: Represents the unit of measurement for the ingredient
           type: string
           enum:
-            - $ref: '#/components/schemas/unitOfMeasurement'
+            - grams
+            - milliliters 
         unit:
           type: number
           format: double
@@ -403,19 +397,6 @@ components:
           type: string
       required:
         - stepName
-    rating:
-      type: integer
-      enum:
-        - 1
-        - 2
-        - 3
-        - 4
-        - 5
-    unitOfMeasurement:
-      type: string
-      enum:
-        - grams
-        - milliliters
   parameters:
     recipeIdPath:
       name: recipeId
