@@ -27,7 +27,8 @@ Matveckan innehåller tre projekt som ligger samlade i detta repository:
     * ```docker build -t matveckan-client .```
     * ```docker run -p 5000:80 matveckan-client``` eller ```docker run -d -p 5000:80 matveckan-client```
 * <a href="https://github.com/Spuute/Matveckan/tree/main/src/api-definition">API-DEFINITION</a> -- **OpenAPI**
-    * OpenAPI
+    * ```docker build -t prism-mock .```
+    * ```docker run -p 35101:35101 prism-mock``` eller ```docker run -d -p 35101:35101```
 
 ## Lokal utveckling
 
