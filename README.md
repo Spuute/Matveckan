@@ -38,10 +38,10 @@ Matveckan innehåller tre projekt som ligger samlade i detta repository:
 
 * <a href="https://github.com/Spuute/Matveckan/tree/main/src/api">API</a> - **ASP.NET Core Web Api**
     * ```docker build -t matveckan-api .```
-    * ```docker run -p 4000:80 matveckan-api ``` eller ```docker run -d -p 4000:80 matveckan-api ```
+    * ```docker run -p 35103:80 matveckan-api ``` eller ```docker run -d -p 35103:80 matveckan-api ```
 * CLIENT - **Blazor WebAssembly (WASM)**
     * ```docker build -t matveckan-client .```
-    * ```docker run -p 5000:80 matveckan-client``` eller ```docker run -d -p 5000:80 matveckan-client```
+    * ```docker run -p 35104:80 matveckan-client``` eller ```docker run -d -p 35104:80 matveckan-client```
 * <a href="https://github.com/Spuute/Matveckan/tree/main/src/api-definition">API-DEFINITION</a> -- **OpenAPI**
     * ```docker build -t prism-mock .```
     * ```docker run -p 35101:35101 prism-mock``` eller ```docker run -d -p 35101:35101```
@@ -52,6 +52,15 @@ För att starta upp hela systemet så finns det en docker-compose fil som ligger
 
 * ```docker compose build``` - (första gången)
 * ``` docker compose up ``` eller ```docker compose up -d```  (kör containern i bakgrunden)
+
+### Portar
+
+När hela projektet är uppe och kör så används följande portar:
+
+* localhost:35101 - **Prism Mock**
+* localhost:35102 - **Api dokumentation med Swagger**
+* localhost:35103 - **API**
+* localhost:35104 - **Client**
 
 ### Kör lint lokalt
 
