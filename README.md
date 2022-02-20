@@ -12,6 +12,22 @@ Syftet med applikationen är att jag försöker hålla nere matkostnaden som bli
 
 Man ska kunna lägga till recept som man vet att alla i familjen äter, och därefter kunna slumpa fram recept baserat på dessa innan man handlar. Man ska få ut en inköpslista med de varor som behövs för att täåcka in hela veckans mat. 
 
+## Beroenden
+
+För att kunna snurra upp detta projekt krävs att du har följande installerat på din dator:
+
+* VS Code
+* Docker Desktop
+* Ett CLI
+
+## Teknologier
+
+I detta projekt används följande teknologier:
+
+* ASP.NET Core
+* Blazor WebAssembly
+* OpenAPI
+
 ## Utveckling
 
 Tanken är att jobba med en <a href="https://swagger.io/resources/articles/adopting-an-api-first-approach/">Api-First </a> approach. Grunden till API:et bygger på en Api definition som utvecklas med <a href="https://swagger.io/specification/">OpenAPI</a>
