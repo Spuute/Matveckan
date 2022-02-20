@@ -1,0 +1,154 @@
+name: Publish docker and nuget to packages
+
+on:
+  push:
+    tags: 
+      - v[1-9]+.[0-9]+.[0-9]+
+
+
+jobs:
+  build-and-push-containers:
+    runs-on: ubuntu-latest
+    env: 
+      working-directory: ./
+    permissions:
+      contents: read
+      packages: write
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2.4.0
+    - name: Set output
+      id: vars
+      run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+    - uses: actions-ecosystem/action-regex-match@v2
+      id: major-match
+      with:
+        text: ${{ steps.vars.outputs.tag }}
+        regex: 'v\d+'
+    - uses: actions-ecosystem/action-regex-match@v2
+      id: minor-match
+      with:
+        text: ${{ steps.vars.outputs.tag }}
+        regex: 'v\d+.\d+'
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1.10.0
+      with:
+        registry: ghcr.io
+        username: ${{github.actor}}
+        password: ${{secrets.TOKEN}}
+
+    - name: Build and push API mock
+      id: docker_build_mock
+      uses: docker/build-push-action@v2.7.0
+      with:
+        push: true
+        context: ${{env.working-directory}}/src/api-definition
+        file: Dockerfile
+        tags: |
+          ghcr.io/spuute/matveckan/api-mock:latest
+          ghcr.io/spuute/matveckan/api-mock:build-${{ github.run_number }}
+          ghcr.io/spuute/matveckan/api-mock:${{ steps.vars.outputs.tag }}
+          ghcr.io/spuute/matveckan/api-mock:${{ steps.major-match.outputs.match }}
+          ghcr.io/spuute/matveckan/api-mock:${{ steps.minor-match.outputs.match }}
+        labels: |
+          org.opencontainers.image.source=https://github.com/${{ github.repository }}
+    
+    # - name: Discord api mock notification
+    #   env:
+    #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_MOBYBOT_WEBHOOK }}
+    #   uses: Ilshidur/action-discord@master
+    #   with:
+    #     args: 'Version ${{ steps.vars.outputs.tag }} of the API mock image is now available: ''docker run \-p 4010\:4010 ghcr.io/spuute/matveckan/api-mock:${{ steps.vars.outputs.tag }}'''
+
+    # - name: Build and push API documentation
+    #   id: docker_build_doc
+    #   uses: docker/build-push-action@v2.7.0
+    #   with:
+    #     push: true
+    #     context: ${{env.working-directory}}/ApiDefinition
+    #     file: ApiDefinition/redoc.Dockerfile
+    #     tags: |
+    #       ghcr.io/spuute/matveckan/api-documentation:latest
+    #       ghcr.io/spuute/matveckan/api-documentation:build-${{ github.run_number }}
+    #       ghcr.io/spuute/matveckan/api-documentation:${{ steps.vars.outputs.tag }}
+    #       ghcr.io/spuute/matveckan/api-documentation:${{ steps.major-match.outputs.match }}
+    #       ghcr.io/spuute/matveckan/api-documentation:${{ steps.minor-match.outputs.match }}
+    #     labels: |
+    #       org.opencontainers.image.source=https://github.com/${{ github.repository }}
+
+    # - name: Discord api documentation notification
+    #   env:
+    #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_MOBYBOT_WEBHOOK }}
+    #   uses: Ilshidur/action-discord@master
+    #   with:
+    #     args: 'Version ${{ steps.vars.outputs.tag }} of the API documentaion image is now available: ''docker run -p 4011:80 ghcr.io/spuute/matveckan/api-documentation:${{ steps.vars.outputs.tag }}'''
+          
+  build-and-push-nuget: 
+    env:
+      PACKAGE_VERSION: ${{ github.event.inputs.pversion }}
+      working-directory: ./src/api-definition
+      
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Set output
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
+        
+      - name: Output version number
+        run: echo "Tag ${{ steps.vars.outputs.tag }}"
+      - uses: actions-ecosystem/action-regex-match@v2
+        id: full-match
+        with:
+          text: ${{ steps.vars.outputs.tag }}
+          regex: '\d+.\d+.\d+'
+      
+      - name: Output clean version number
+        run: echo "Clean tag ${{ steps.full-match.outputs.match }}"    
+      
+      - uses: actions/checkout@v2 
+      - uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+
+      - name: Download NSwag
+        run: curl -O -L https://github.com/RicoSuter/NSwag/releases/download/v13.14.7/NSwag.zip
+
+      - name: Install NSwag
+        run: unzip -q ./NSwag.zip -d NSwag
+
+
+      - name: Run NSwag
+        run: dotnet ${{github.workspace}}/NSwag/Net60/dotnet-nswag.dll run todo-dto.nswag.json
+        working-directory: ${{env.working-directory}}
+
+      - name: Build
+        run: dotnet build -c Release /property:Version=${{ steps.full-match.outputs.match }}
+        working-directory: ${{env.working-directory}}
+
+      - name: Pack
+        run: dotnet pack -c Release -o ${{env.working-directory}}/dist -p:PackageVersion=${{ steps.full-match.outputs.match }} --no-build
+        working-directory: ${{env.working-directory}}
+
+      - name: Install Nuget
+        uses: nuget/setup-nuget@v1
+        with:        
+          nuget-version: '5.x'
+
+      - name: Add private GitHub registry to NuGet
+        run: nuget sources add -Name github -UserName spuute -Password ${{ secrets.TOKEN }} -Source https://nuget.pkg.github.com/spuute/matveckan.json
+     
+      - name: Push generated package to GitHub registry
+        run: |
+          nuget push ${{env.working-directory}}/Matveckan/dist/*.nupkg -Source "github" -SkipDuplicate -ApiKey ${{ secrets.TOKEN }}
+          
+      # - name: Discord nuget package notification
+      #   env:
+      #     DISCORD_WEBHOOK: ${{ secrets.DISCORD_NUGET_BOT }}
+      #   uses: Ilshidur/action-discord@master
+      #   with:
+      #     args: 'Version ${{ steps.full-match.outputs.match }} of the FunusCloud.API nuget is now available, install/update it by: ''dotnet add package FunusCloud.Api --version ${{ steps.full-match.outputs.match }}'''
