@@ -9,3 +9,16 @@ services:
     build: ./client
     ports:
       - 5000:80
+  prism-mock:
+    build: ./api-definition
+    ports:
+      - 35101:35101
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "4012:8080"
+    volumes:
+      - ./api-definition/matveckan.oas.yaml:/matveckan.oas.yaml
+    environment:
+      SWAGGER_JSON: /matveckan.oas.yaml
