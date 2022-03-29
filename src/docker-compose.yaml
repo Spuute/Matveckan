@@ -1,6 +1,17 @@
 version: "3.9"
 
 services:
+  db:
+    image: mariadb:10.5
+    ports:
+      - "35100:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: dockerDb
+      MYSQL_DATABASE: Matveckan
+    restart: always
+    volumes:
+      - matveckan-dev-mariadb-data:/var/lib/mysql
+      - matveckan-dev-mariadb-config:/etc/mysql/conf.d
   api:
     build: ./api
     ports:
@@ -22,3 +33,9 @@ services:
       - ./api-definition/matveckan.oas.yaml:/matveckan.oas.yaml
     environment:
       SWAGGER_JSON: /matveckan.oas.yaml
+
+volumes:
+  matveckan-dev-mariadb-data:
+    driver: local
+  matveckan-dev-mariadb-config:
+    driver: local
