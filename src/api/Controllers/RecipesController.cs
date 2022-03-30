@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using api.Entities;
+using api.Services;
 
 namespace api.Controllers
 {
@@ -8,9 +9,19 @@ namespace api.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
+        private readonly IRecipeService _recipeService;
+
+        public RecipesController(IRecipeService recipeService)
+        {
+            _recipeService = recipeService;
+
+        }
+
         [HttpGet]
-        public async Task<IActionResult> GetAllRecipes() {
-            throw new NotImplementedException();
+        public async Task<IActionResult> Get()
+        {
+            var recipes = await _recipeService.GetAllRecipes();
+            return Ok("All Good");
         }
 
 
