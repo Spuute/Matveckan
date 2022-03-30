@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
+using api.Entities;
 
 namespace api.Controllers
 {
@@ -7,6 +8,11 @@ namespace api.Controllers
     [ApiController]
     public class RecipesController : ControllerBase
     {
-        
+        [HttpGet]
+        public async Task<IActionResult> GetAllRecipes() {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
