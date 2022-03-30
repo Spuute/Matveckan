@@ -1,4 +1,5 @@
 using api.Data;
+using api.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ApplicationDbContext>(opts => opts.UseMySql(builder.Configuration.GetConnectionString("Db"), new MariaDbServerVersion(new System.Version(10, 5, 6))));
+builder.Services.AddTransient<IRecipeService, RecipesService>();
 
 var app = builder.Build();
 
