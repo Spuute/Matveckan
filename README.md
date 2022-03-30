@@ -12,14 +12,6 @@ Syftet med applikationen är att jag försöker hålla nere matkostnaden som bli
 
 Man ska kunna lägga till recept som man vet att alla i familjen äter, och därefter kunna slumpa fram recept baserat på dessa innan man handlar. Man ska få ut en inköpslista med de varor som behövs för att täåcka in hela veckans mat. 
 
-## Beroenden
-
-För att kunna snurra upp detta projekt krävs att du har följande installerat på din dator:
-
-* VS Code
-* Docker Desktop
-* Ett CLI
-
 ## Teknologier
 
 I detta projekt används följande teknologier:
@@ -57,6 +49,7 @@ För att starta upp hela systemet så finns det en docker-compose fil som ligger
 
 När hela projektet är uppe och kör så används följande portar:
 
+* localhost:35100 - **Maria DB**
 * localhost:35101 - **Prism Mock**
 * localhost:35102 - **Api dokumentation med Swagger**
 * localhost:35103 - **API**
