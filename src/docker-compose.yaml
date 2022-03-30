@@ -16,6 +16,9 @@ services:
     build: ./api
     ports:
       - 35103:80
+    environment:
+      ASPNETCORE_URLS: "http://+"
+      ASPNETCORE_ENVIRONMENT: "Development"
   client:
     build: ./client
     ports:
