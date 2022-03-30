@@ -18,8 +18,6 @@ externalDocs:
   url: http://www.test.nu
 
 tags:
-  - name: users
-    description: All operations for users
   - name: recipes
     description: All operations for recipes
   - name: categories
@@ -28,52 +26,6 @@ tags:
     description: All operations for ingredients
 
 paths:
-  /users:
-    summary: Operations for users
-    description: Contains all operations for users
-    get:
-      tags: 
-        - users
-      summary: Get all users
-      description: Returns a list of all users
-      operationId: getUsers
-      responses:
-        '200':
-          description: Successfully returned all users
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/User'
-        '400':
-          $ref: '#/components/responses/4xxResponse'
-        '500':
-          $ref: '#/components/responses/5xxResponse'
-    post:
-      tags:
-        - users
-      summary: Add new user
-      description: Adds a new user to the system
-      operationId: addUser
-      requestBody:
-        description: Adds a new user to the system
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/User'
-      responses:
-        '200':
-          description: Successfully added user to the system
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        '400':
-          $ref: '#/components/responses/4xxResponse'
-        '500':
-          $ref: '#/components/responses/5xxResponse'
   /recipes:
     summary: Operations for recipes
     description: Contains all operations of recipes
